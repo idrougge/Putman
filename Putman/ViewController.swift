@@ -83,6 +83,8 @@ class BodyController: NSViewController {
 
 class TopViewController: NSViewController {
     
+    @objc dynamic var params: [NSURLQueryItem] = []
+    @IBOutlet weak var paramsTableView: NSTableView!
     @IBAction func methodPopUpDidChange(_ sender: NSPopUpButton) {
         print(#function, sender.selectedItem!.identifier!.rawValue)
     }
@@ -91,6 +93,10 @@ class TopViewController: NSViewController {
 extension TopViewController: NSTextFieldDelegate {
     override func controlTextDidChange(_ obj: Notification) {
         guard let textField = obj.object as? NSTextField else { return }
-        print(#function, textField.stringValue)
+        //print(#function, textField.stringValue)
+        guard let url = URL(string: textField.stringValue), let components = URLComponents(url: url, resolvingAgainstBaseURL: false), let queryItems = components.queryItems else { return self.params.removeAll() }
+        //print(queryItems)
+        self.params = queryItems as [NSURLQueryItem]
+        paramsTableView.reloadData()
     }
 }
