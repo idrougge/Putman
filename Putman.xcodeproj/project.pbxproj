@@ -12,6 +12,10 @@
 		DC47E5A521581EE20072EAC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC47E5A421581EE20072EAC5 /* Assets.xcassets */; };
 		DC47E5A821581EE20072EAC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC47E5A621581EE20072EAC5 /* Main.storyboard */; };
 		DC47E5B421581EE20072EAC5 /* PutmanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47E5B321581EE20072EAC5 /* PutmanTests.swift */; };
+		DC47E5C521581F240072EAC5 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47E5C421581F240072EAC5 /* main.swift */; };
+		DC47E5CA21581F670072EAC5 /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47E5C921581F670072EAC5 /* HTTP.swift */; };
+		DC47E5CB21581F670072EAC5 /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47E5C921581F670072EAC5 /* HTTP.swift */; };
+		DC47E5CC21581F670072EAC5 /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47E5C921581F670072EAC5 /* HTTP.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +28,18 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		DC47E5C021581F240072EAC5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		DC47E59D21581EE10072EAC5 /* Putman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Putman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC47E5A021581EE20072EAC5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -35,6 +51,9 @@
 		DC47E5AF21581EE20072EAC5 /* PutmanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PutmanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC47E5B321581EE20072EAC5 /* PutmanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutmanTests.swift; sourceTree = "<group>"; };
 		DC47E5B521581EE20072EAC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC47E5C221581F240072EAC5 /* putman-cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "putman-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC47E5C421581F240072EAC5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		DC47E5C921581F670072EAC5 /* HTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTTP.swift; path = Putman/HTTP.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,14 +71,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC47E5BF21581F240072EAC5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		DC47E59421581EE10072EAC5 = {
 			isa = PBXGroup;
 			children = (
+				DC47E5C921581F670072EAC5 /* HTTP.swift */,
 				DC47E59F21581EE10072EAC5 /* Putman */,
 				DC47E5B221581EE20072EAC5 /* PutmanTests */,
+				DC47E5C321581F240072EAC5 /* putman-cli */,
 				DC47E59E21581EE10072EAC5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,6 +97,7 @@
 			children = (
 				DC47E59D21581EE10072EAC5 /* Putman.app */,
 				DC47E5AF21581EE20072EAC5 /* PutmanTests.xctest */,
+				DC47E5C221581F240072EAC5 /* putman-cli */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -93,6 +122,14 @@
 				DC47E5B521581EE20072EAC5 /* Info.plist */,
 			);
 			path = PutmanTests;
+			sourceTree = "<group>";
+		};
+		DC47E5C321581F240072EAC5 /* putman-cli */ = {
+			isa = PBXGroup;
+			children = (
+				DC47E5C421581F240072EAC5 /* main.swift */,
+			);
+			path = "putman-cli";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +170,23 @@
 			productReference = DC47E5AF21581EE20072EAC5 /* PutmanTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		DC47E5C121581F240072EAC5 /* putman-cli */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC47E5C621581F240072EAC5 /* Build configuration list for PBXNativeTarget "putman-cli" */;
+			buildPhases = (
+				DC47E5BE21581F240072EAC5 /* Sources */,
+				DC47E5BF21581F240072EAC5 /* Frameworks */,
+				DC47E5C021581F240072EAC5 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "putman-cli";
+			productName = "putman-cli";
+			productReference = DC47E5C221581F240072EAC5 /* putman-cli */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -152,6 +206,10 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = DC47E59C21581EE10072EAC5;
 					};
+					DC47E5C121581F240072EAC5 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = DC47E59821581EE10072EAC5 /* Build configuration list for PBXProject "Putman" */;
@@ -169,6 +227,7 @@
 			targets = (
 				DC47E59C21581EE10072EAC5 /* Putman */,
 				DC47E5AE21581EE20072EAC5 /* PutmanTests */,
+				DC47E5C121581F240072EAC5 /* putman-cli */,
 			);
 		};
 /* End PBXProject section */
@@ -197,6 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC47E5CA21581F670072EAC5 /* HTTP.swift in Sources */,
 				DC47E5A321581EE20072EAC5 /* ViewController.swift in Sources */,
 				DC47E5A121581EE20072EAC5 /* AppDelegate.swift in Sources */,
 			);
@@ -207,6 +267,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC47E5B421581EE20072EAC5 /* PutmanTests.swift in Sources */,
+				DC47E5CB21581F670072EAC5 /* HTTP.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC47E5BE21581F240072EAC5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC47E5C521581F240072EAC5 /* main.swift in Sources */,
+				DC47E5CC21581F670072EAC5 /* HTTP.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +474,26 @@
 			};
 			name = Release;
 		};
+		DC47E5C721581F240072EAC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4AZ9573G2J;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		DC47E5C821581F240072EAC5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4AZ9573G2J;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -430,6 +520,15 @@
 			buildConfigurations = (
 				DC47E5BC21581EE20072EAC5 /* Debug */,
 				DC47E5BD21581EE20072EAC5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC47E5C621581F240072EAC5 /* Build configuration list for PBXNativeTarget "putman-cli" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC47E5C721581F240072EAC5 /* Debug */,
+				DC47E5C821581F240072EAC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
