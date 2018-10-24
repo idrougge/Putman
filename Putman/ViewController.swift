@@ -82,8 +82,11 @@ class BodyController: NSViewController {
 }
 
 class TopViewController: NSViewController {
-    
-    @objc dynamic var params: [NSURLQueryItem] = []
+    override func viewDidLoad() {
+        ValueTransformer.setValueTransformer(ComponentsTransformer(), forName: ComponentsTransformer.name)
+        super.viewDidLoad()
+    }
+    @objc dynamic var params: [NSURLQueryItem] = [] // Must be declared dynamic if using bindings; Use NS variant over struct variant for compatibility with NSArrayController
     @IBOutlet weak var paramsTableView: NSTableView!
     @IBAction func methodPopUpDidChange(_ sender: NSPopUpButton) {
         print(#function, sender.selectedItem!.identifier!.rawValue)
@@ -94,9 +97,39 @@ extension TopViewController: NSTextFieldDelegate {
     override func controlTextDidChange(_ obj: Notification) {
         guard let textField = obj.object as? NSTextField else { return }
         //print(#function, textField.stringValue)
-        guard let url = URL(string: textField.stringValue), let components = URLComponents(url: url, resolvingAgainstBaseURL: false), let queryItems = components.queryItems else { return self.params.removeAll() }
+        guard let url = URL(string: textField.stringValue), let components = URLComponents(url: url, resolvingAgainstBaseURL: false), var queryItems = components.queryItems else { return self.params.removeAll() }
         //print(queryItems)
+        queryItems.append(URLQueryItem(name: "", value: nil))
         self.params = queryItems as [NSURLQueryItem]
         paramsTableView.reloadData()
+    }
+}
+
+class Grej: NSObject {
+    // NB: Any value returned from a ValueTransformer to an ObjectController must be KVC compliant, hence the @objc variable declarations
+    @objc var name: String
+    @objc var value: String
+    init(name: String, value: String) {
+        self.name = name
+        self.value = value
+    }
+}
+
+// Use @objc() declaration with explicit name to avoid automatic name mangling which prevents ObjectController from finding the class
+@objc(ComponentsTransformer) class ComponentsTransformer: ValueTransformer {
+    static let name = NSValueTransformerName("ComponentsTransformer")
+    /*
+    override class func transformedValueClass() -> AnyClass {
+        return Grej.self
+        return NSString.self
+    }
+     */
+    override func transformedValue(_ value: Any?) -> Any? {
+        print(#function, value)
+        return [Grej(name: "hej", value: "grej")]
+    }
+    override func reverseTransformedValue(_ value: Any?) -> Any? {
+        print(#function, value)
+        return nil
     }
 }

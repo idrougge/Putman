@@ -866,7 +866,11 @@
                 </viewController>
                 <arrayController id="FN8-Vj-fje">
                     <connections>
-                        <binding destination="iap-0X-KB7" name="contentArray" keyPath="params" id="QpW-Ih-egx"/>
+                        <binding destination="iap-0X-KB7" name="contentArray" keyPath="params" id="7fd-1l-mpb">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">ComponentsTransformer</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </arrayController>
             </objects>
