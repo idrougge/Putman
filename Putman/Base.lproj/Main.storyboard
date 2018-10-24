@@ -785,7 +785,22 @@
                                             <tableViewGridLines key="gridStyleMask" vertical="YES"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="key" width="116" minWidth="40" maxWidth="1000" id="rD5-Wx-n2O">
+                                                <tableColumn identifier="" width="20" minWidth="10" maxWidth="3.4028234663852886e+38" id="edn-rY-Fy8" userLabel="Selected">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </tableHeaderCell>
+                                                    <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="left" inset="2" id="ndk-vm-luf">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                    <connections>
+                                                        <binding destination="FN8-Vj-fje" name="value" keyPath="arrangedObjects.selected" id="p38-Jw-Hbk"/>
+                                                    </connections>
+                                                </tableColumn>
+                                                <tableColumn identifier="key" width="69" minWidth="40" maxWidth="1000" id="rD5-Wx-n2O">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Key">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -801,7 +816,7 @@
                                                         <binding destination="FN8-Vj-fje" name="value" keyPath="arrangedObjects.name" id="hz3-Lo-sHW"/>
                                                     </connections>
                                                 </tableColumn>
-                                                <tableColumn identifier="value" width="286" minWidth="40" maxWidth="1000" id="Xoq-w1-bQL">
+                                                <tableColumn identifier="value" width="40" minWidth="40" maxWidth="1000" id="Xoq-w1-bQL">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -822,7 +837,7 @@
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="5yT-c7-f6f">
-                                    <rect key="frame" x="1" y="150" width="408" height="16"/>
+                                    <rect key="frame" x="1" y="188" width="408" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="yTu-Hl-Uzs">
@@ -871,6 +886,7 @@
                                 <string key="NSValueTransformerName">ComponentsTransformer</string>
                             </dictionary>
                         </binding>
+                        <binding destination="iap-0X-KB7" name="editable" keyPath="editable" id="735-WR-qlm"/>
                     </connections>
                 </arrayController>
             </objects>

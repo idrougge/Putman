@@ -86,6 +86,7 @@ class TopViewController: NSViewController {
         ValueTransformer.setValueTransformer(ComponentsTransformer(), forName: ComponentsTransformer.name)
         super.viewDidLoad()
     }
+    @objc dynamic var editable: Bool = true
     @objc dynamic var params: [NSURLQueryItem] = [] // Must be declared dynamic if using bindings; Use NS variant over struct variant for compatibility with NSArrayController
     @IBOutlet weak var paramsTableView: NSTableView!
     @IBAction func methodPopUpDidChange(_ sender: NSPopUpButton) {
@@ -105,31 +106,41 @@ extension TopViewController: NSTextFieldDelegate {
     }
 }
 
-class Grej: NSObject {
+class TransformedValue: NSObject {
     // NB: Any value returned from a ValueTransformer to an ObjectController must be KVC compliant, hence the @objc variable declarations
     @objc var name: String
     @objc var value: String
+    @objc var selected: Bool
     init(name: String, value: String) {
         self.name = name
         self.value = value
+        self.selected = true
+    }
+    init(queryItem: URLQueryItem) {
+        self.name = queryItem.name
+        self.value = queryItem.value ?? "???"
+        self.selected = queryItem.name == "primo"
     }
 }
 
 // Use @objc() declaration with explicit name to avoid automatic name mangling which prevents ObjectController from finding the class
 @objc(ComponentsTransformer) class ComponentsTransformer: ValueTransformer {
     static let name = NSValueTransformerName("ComponentsTransformer")
-    /*
     override class func transformedValueClass() -> AnyClass {
-        return Grej.self
-        return NSString.self
+        return TransformedValue.self
     }
-     */
+    override class func allowsReverseTransformation() -> Bool {
+        return true
+    }
     override func transformedValue(_ value: Any?) -> Any? {
-        print(#function, value)
-        return [Grej(name: "hej", value: "grej")]
+        print(#function, value ?? "")
+        if let value = value as? [URLQueryItem] {
+            return value.map(TransformedValue.init(queryItem:))
+        }
+        return [TransformedValue(name: "hej", value: "grej")]
     }
     override func reverseTransformedValue(_ value: Any?) -> Any? {
-        print(#function, value)
+        print(#function, value ?? "")
         return nil
     }
 }
