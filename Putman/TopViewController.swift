@@ -29,7 +29,15 @@ extension TopViewController: NSTextFieldDelegate {
             let url = URL(string: textField.stringValue),
             let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false),
             var queryItems = components.queryItems else { return self.params.removeAll() }
-        //print(queryItems)
+        // NOTE: "Rich text" must be activated for NSTextField for attributed strings to take effect
+        let attributedString = textField.attributedStringValue.mutableCopy() as! NSMutableAttributedString
+        let ranges: [(range: NSRange, colour: NSColor)] = [
+            (components.rangeOfScheme, .red), (components.rangeOfHost, .black), (components.rangeOfPath, .darkGray), (components.rangeOfQuery, .blue)
+            ]
+        ranges.forEach{ (range, colour) in
+            attributedString.addAttribute(.foregroundColor, value: colour, range: range)
+        }
+        textField.attributedStringValue = attributedString
         queryItems.append(URLQueryItem(name: "", value: nil))
         self.params = queryItems as [NSURLQueryItem]
         paramsTableView.reloadData()
@@ -74,4 +82,5 @@ class TransformedValue: NSObject {
         return nil
     }
 }
+
 
