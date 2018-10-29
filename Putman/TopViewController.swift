@@ -12,12 +12,29 @@ class TopViewController: NSViewController {
     override func viewDidLoad() {
         ValueTransformer.setValueTransformer(ComponentsTransformer(), forName: ComponentsTransformer.name)
         super.viewDidLoad()
+        paramsTableView.dataSource = self
     }
     @objc dynamic var editable: Bool = true
     @objc dynamic var params: [NSURLQueryItem] = [] // Must be declared dynamic if using bindings; Use NS variant over struct variant for compatibility with NSArrayController
     @IBOutlet weak var paramsTableView: NSTableView!
     @IBAction func methodPopUpDidChange(_ sender: NSPopUpButton) {
         print(#function, sender.selectedItem!.identifier!.rawValue)
+    }
+}
+
+extension TopViewController: NSTableViewDataSource {
+    func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
+        //print(#function, object, tableColumn, row)
+        let newValue = object as! String
+        let oldValue = params[row]
+        let key: String, value: String?
+        switch tableColumn?.identifier.rawValue {
+        case "key"?:   (key, value) = (newValue, oldValue.value)
+        case "value"?: (key, value) = (oldValue.name, newValue)
+        default: return assertionFailure()
+        }
+        let obj = NSURLQueryItem(name: key, value: value)
+        params[row] = obj
     }
 }
 
@@ -82,5 +99,6 @@ class TransformedValue: NSObject {
         return nil
     }
 }
+
 
 
