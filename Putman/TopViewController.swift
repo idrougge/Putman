@@ -25,7 +25,10 @@ extension TopViewController: NSTextFieldDelegate {
     override func controlTextDidChange(_ obj: Notification) {
         guard let textField = obj.object as? NSTextField else { return }
         //print(#function, textField.stringValue)
-        guard let url = URL(string: textField.stringValue), let components = URLComponents(url: url, resolvingAgainstBaseURL: false), var queryItems = components.queryItems else { return self.params.removeAll() }
+        guard
+            let url = URL(string: textField.stringValue),
+            let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false),
+            var queryItems = components.queryItems else { return self.params.removeAll() }
         //print(queryItems)
         queryItems.append(URLQueryItem(name: "", value: nil))
         self.params = queryItems as [NSURLQueryItem]
@@ -71,3 +74,4 @@ class TransformedValue: NSObject {
         return nil
     }
 }
+
