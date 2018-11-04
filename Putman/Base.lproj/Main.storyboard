@@ -738,7 +738,7 @@
                         <subviews>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="toi-qR-cMK">
                                 <rect key="frame" x="95" y="258" width="281" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="http://www.domaen.com/bla.php?primo=alfa&amp;secundo=beta" placeholderString="URL" drawsBackground="YES" id="6xm-Pr-Mz9">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="http://www.domaen.com/bla.php?primo=alfa&amp;secundo=beta" placeholderString="URL" drawsBackground="YES" allowsEditingTextAttributes="YES" id="6xm-Pr-Mz9">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -777,7 +777,7 @@
                                     <rect key="frame" x="1" y="0.0" width="408" height="204"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="2gG-R1-o3K" id="yUQ-cj-44x">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="2gG-R1-o3K" id="yUQ-cj-44x" customClass="ParamsTableView" customModule="Putman" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="408" height="181"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -785,7 +785,7 @@
                                             <tableViewGridLines key="gridStyleMask" vertical="YES"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="" width="20" minWidth="10" maxWidth="3.4028234663852886e+38" id="edn-rY-Fy8" userLabel="Selected">
+                                                <tableColumn identifier="selected" width="20" minWidth="10" maxWidth="3.4028234663852886e+38" id="edn-rY-Fy8" userLabel="Selected">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -797,7 +797,7 @@
                                                     </buttonCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <connections>
-                                                        <binding destination="FN8-Vj-fje" name="value" keyPath="arrangedObjects.selected" id="p38-Jw-Hbk"/>
+                                                        <binding destination="FN8-Vj-fje" name="value" keyPath="arrangedObjects.selected" id="uyB-d4-1uV"/>
                                                     </connections>
                                                 </tableColumn>
                                                 <tableColumn identifier="key" width="69" minWidth="40" maxWidth="1000" id="rD5-Wx-n2O">
@@ -810,13 +810,17 @@
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        <connections>
+                                                            <action selector="keyCellAction:" target="iap-0X-KB7" id="p5Q-oL-ngt"/>
+                                                        </connections>
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <connections>
-                                                        <binding destination="FN8-Vj-fje" name="value" keyPath="arrangedObjects.name" id="hz3-Lo-sHW"/>
+                                                        <binding destination="FN8-Vj-fje" name="value" keyPath="arrangedObjects.name" id="CpR-5l-g9U"/>
+                                                        <binding destination="FN8-Vj-fje" name="enabled" keyPath="arrangedObjects.selected" id="Jfh-kK-fb9"/>
                                                     </connections>
                                                 </tableColumn>
-                                                <tableColumn identifier="value" width="40" minWidth="40" maxWidth="1000" id="Xoq-w1-bQL">
+                                                <tableColumn identifier="value" width="306" minWidth="40" maxWidth="1000" id="Xoq-w1-bQL">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -830,6 +834,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <connections>
                                                         <binding destination="FN8-Vj-fje" name="value" keyPath="arrangedObjects.value" id="C3G-Gk-K4h"/>
+                                                        <binding destination="FN8-Vj-fje" name="enabled" keyPath="arrangedObjects.selected" id="8FQ-SU-R3W"/>
                                                     </connections>
                                                 </tableColumn>
                                             </tableColumns>
@@ -877,16 +882,17 @@
                     </view>
                     <connections>
                         <outlet property="paramsTableView" destination="yUQ-cj-44x" id="0O8-be-nRJ"/>
+                        <outlet property="urlTextField" destination="toi-qR-cMK" id="Ub0-rU-eED"/>
                     </connections>
                 </viewController>
                 <arrayController id="FN8-Vj-fje">
                     <connections>
+                        <binding destination="iap-0X-KB7" name="editable" keyPath="editable" id="735-WR-qlm"/>
                         <binding destination="iap-0X-KB7" name="contentArray" keyPath="params" id="7fd-1l-mpb">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">ComponentsTransformer</string>
                             </dictionary>
                         </binding>
-                        <binding destination="iap-0X-KB7" name="editable" keyPath="editable" id="735-WR-qlm"/>
                     </connections>
                 </arrayController>
             </objects>
@@ -931,7 +937,7 @@
                                     <rect key="frame" x="1" y="1" width="448" height="298"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsUndo="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="dOq-E4-7TG">
+                                        <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsUndo="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="dOq-E4-7TG">
                                             <rect key="frame" x="0.0" y="0.0" width="448" height="298"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

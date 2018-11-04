@@ -9,6 +9,9 @@
 import Cocoa
 
 class TopViewController: NSViewController {
+    @IBAction func keyCellAction(_ sender: NSTextFieldCell) {
+        print(#function, sender)
+    }
     override func viewDidLoad() {
         ValueTransformer.setValueTransformer(ComponentsTransformer(), forName: ComponentsTransformer.name)
         super.viewDidLoad()
@@ -16,7 +19,8 @@ class TopViewController: NSViewController {
     }
     @objc dynamic var editable: Bool = true
     @objc dynamic var params: [NSURLQueryItem] = [] // Must be declared dynamic if using bindings; Use NS variant over struct variant for compatibility with NSArrayController
-    @IBOutlet weak var paramsTableView: NSTableView!
+    @IBOutlet weak var urlTextField: NSTextField!
+    @IBOutlet weak var paramsTableView: ParamsTableView!
     @IBAction func methodPopUpDidChange(_ sender: NSPopUpButton) {
         print(#function, sender.selectedItem!.identifier!.rawValue)
     }
@@ -25,16 +29,37 @@ class TopViewController: NSViewController {
 extension TopViewController: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
         //print(#function, object, tableColumn, row)
-        let newValue = object as! String
+        if let _ = object as? Bool {
+            // TODO: Handle activation/deactivation
+            return
+        }
+        
+        guard let object = object as? String else { return }
         let oldValue = params[row]
         let key: String, value: String?
         switch tableColumn?.identifier.rawValue {
-        case "key"?:   (key, value) = (newValue, oldValue.value)
-        case "value"?: (key, value) = (oldValue.name, newValue)
+        case "key"?:   (key, value) = (object, oldValue.value)
+        case "value"?: (key, value) = (oldValue.name, object)
         default: return assertionFailure()
         }
-        let obj = NSURLQueryItem(name: key, value: value)
-        params[row] = obj
+        let newValue = NSURLQueryItem(name: key, value: value)
+        params[row] = newValue
+
+        guard
+            let components = NSURLComponents(string: urlTextField.stringValue),
+            var queryItems = components.queryItems
+            else { return }
+        if let index = queryItems.index(of: oldValue as URLQueryItem) {
+            queryItems[index] = newValue as URLQueryItem
+        } else {
+            queryItems.append(newValue as URLQueryItem)
+        }
+        components.queryItems = queryItems
+        guard let url = components.url else { return }
+        urlTextField.stringValue = url.absoluteString
+        let notif = Notification(name: NSControl.textDidChangeNotification,
+                                 object: urlTextField, userInfo: nil)
+        //controlTextDidChange(notif)
     }
 }
 
@@ -74,7 +99,7 @@ class TransformedValue: NSObject {
     init(queryItem: URLQueryItem) {
         self.name = queryItem.name
         self.value = queryItem.value ?? "???"
-        self.selected = queryItem.name == "primo"
+        self.selected = !queryItem.name.isEmpty //queryItem.name == "primo"
     }
 }
 
@@ -100,5 +125,53 @@ class TransformedValue: NSObject {
     }
 }
 
-
-
+@objcMembers
+@objc(ArrayController) class ArrayController: NSArrayController {
+    @objc dynamic override func awakeFromNib() {
+        print(#function)
+    }
+    @objc dynamic override init(content: Any?) {
+        print("init:", content)
+        super.init(content: content)
+    }
+    @objc dynamic required init?(coder: NSCoder) {
+        print("init:", coder)
+        super.init(coder: coder)
+    }
+    @objc dynamic override func add(_ sender: Any?) {
+        print(#function, sender)
+        super.add(sender)
+    }
+    @objc dynamic override func newObject() -> Any {
+        print(#function)
+        return "Hej"
+    }
+    @objc dynamic override func commitEditing() -> Bool {
+        print(#function)
+        return true
+    }
+    @objc dynamic override func discardEditing() {
+        print(#function)
+    }
+    @objc dynamic override func setSelectionIndex(_ index: Int) -> Bool {
+        print(#function, index)
+        return super.setSelectionIndex(index)
+    }
+    @objc dynamic override func objectDidBeginEditing(_ editor: Any) {
+        print(#function, editor)
+    }
+    @objc dynamic override func controlTextDidBeginEditing(_ obj: Notification) {
+        print(#function, obj)
+    }
+    override func objectDidEndEditing(_ editor: Any) {
+        print(#function, editor)
+        print(#function, self.arrangedObjects)
+    }
+    override func controlTextDidEndEditing(_ obj: Notification) {
+        print(#function, obj)
+    }
+    @objc dynamic override func addObject(_ object: Any) {
+        print(#function, object)
+    }
+    
+}
