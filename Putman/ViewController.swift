@@ -34,6 +34,11 @@ class HorSplitViewController: NSSplitViewController {
         loadAndPresent()
     }
     
+    @objc func test(sender: URL?) {
+        print(type(of: self), #function, sender ?? "")
+        loadAndPresent()
+    }
+    
     private func loadAndPresent() {
         let url = URL(string: "http://127.0.0.1:8124/")!
         call(url: url){ data, response, error in
@@ -43,7 +48,7 @@ class HorSplitViewController: NSSplitViewController {
             DispatchQueue.main.async {
                 self.headerController?.table.reloadData()
                 if let data = data, let body = String(data: data, encoding: .utf8) {
-                    self.bodyController?.textView.insertText(body)
+                    self.bodyController?.textView.string = body
                 } else {
                     print(data ?? "no data")
                 }

@@ -753,6 +753,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="didPressGo:" target="iap-0X-KB7" id="Hjd-wI-aoI"/>
+                                </connections>
                             </button>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="J2I-Mz-pSb">
                                 <rect key="frame" x="18" y="255" width="72" height="26"/>
@@ -833,8 +836,8 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <connections>
-                                                        <binding destination="FN8-Vj-fje" name="value" keyPath="arrangedObjects.value" id="C3G-Gk-K4h"/>
                                                         <binding destination="FN8-Vj-fje" name="enabled" keyPath="arrangedObjects.selected" id="8FQ-SU-R3W"/>
+                                                        <binding destination="FN8-Vj-fje" name="value" keyPath="arrangedObjects.value" id="C3G-Gk-K4h"/>
                                                     </connections>
                                                 </tableColumn>
                                             </tableColumns>

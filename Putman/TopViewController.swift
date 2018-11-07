@@ -24,6 +24,21 @@ class TopViewController: NSViewController {
     @IBAction func methodPopUpDidChange(_ sender: NSPopUpButton) {
         print(#function, sender.selectedItem!.identifier!.rawValue)
     }
+    @IBAction func didPressGo(_ sender: NSButton) {
+        print(#function)
+        let url = URL(string: urlTextField.stringValue)
+        print(nextResponder)
+        let sel = #selector(HorSplitViewController.test(sender:))
+        //nextResponder?.perform(sel)
+        NSApplication.shared.sendAction(sel, to: nil, from: url)
+    }
+}
+
+extension TopViewController: NSTableViewDelegate {
+    func tableView(_ tableView: NSTableView, shouldEdit tableColumn: NSTableColumn?, row: Int) -> Bool {
+        print(#function, tableColumn!.identifier.rawValue, row)
+        return true
+    }
 }
 
 extension TopViewController: NSTableViewDataSource {
@@ -65,12 +80,13 @@ extension TopViewController: NSTableViewDataSource {
 
 extension TopViewController: NSTextFieldDelegate {
     override func controlTextDidChange(_ obj: Notification) {
-        guard let textField = obj.object as? NSTextField else { return }
-        //print(#function, textField.stringValue)
+        print(#function, obj)
         guard
+            let textField = obj.object as? NSTextField,
             let url = URL(string: textField.stringValue),
             let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false),
-            var queryItems = components.queryItems else { return self.params.removeAll() }
+            var queryItems = components.queryItems
+            else { return self.params.removeAll() }
         // NOTE: "Rich text" must be activated for NSTextField for attributed strings to take effect
         let attributedString = textField.attributedStringValue.mutableCopy() as! NSMutableAttributedString
         let ranges: [(range: NSRange, colour: NSColor)] = [
@@ -80,6 +96,7 @@ extension TopViewController: NSTextFieldDelegate {
             attributedString.addAttribute(.foregroundColor, value: colour, range: range)
         }
         textField.attributedStringValue = attributedString
+        // Append empty item for user to edit when adding new items
         queryItems.append(URLQueryItem(name: "", value: nil))
         self.params = queryItems as [NSURLQueryItem]
         paramsTableView.reloadData()
@@ -110,10 +127,11 @@ class TransformedValue: NSObject {
         return TransformedValue.self
     }
     override class func allowsReverseTransformation() -> Bool {
+        print(#function)
         return true
     }
     override func transformedValue(_ value: Any?) -> Any? {
-        print(#function, value ?? "")
+        //print(#function, value ?? "")
         if let value = value as? [URLQueryItem] {
             return value.map(TransformedValue.init(queryItem:))
         }

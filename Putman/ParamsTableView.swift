@@ -10,12 +10,12 @@ import Cocoa
 
 /// NSTableView subclass to handle jumping to correct row/column when tabbing
 class ParamsTableView: NSTableView {
+    
     override func textDidEndEditing(_ notification: Notification) {
         //print(type(of: self), #function, notification)
         guard let movement = notification.userInfo?["NSTextMovement"] as? Int else {
             return assertionFailure("No text movement")
         }
-        // TODO: Refactor for use of NSTextMovement (OSX 10.13+)
         switch movement {
         case NSUpTextMovement: print("NSUpTextMovement")
         case NSDownTextMovement: print("NSDownTextMovement")
@@ -32,6 +32,7 @@ class ParamsTableView: NSTableView {
         let column = editedColumn
         //print("row:", row, "column:", column)
         super.textDidEndEditing(notification)
+        // TODO: Refactor for use of NSTextMovement (OSX 10.13+)
         switch movement {
         case NSTabTextMovement:
             let nextColumn = (column + 1) % numberOfColumns
