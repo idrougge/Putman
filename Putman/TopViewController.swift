@@ -16,13 +16,24 @@ class TopViewController: NSViewController {
         ValueTransformer.setValueTransformer(ComponentsTransformer(), forName: ComponentsTransformer.name)
         super.viewDidLoad()
         paramsTableView.dataSource = self
+        let tableVC = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("tablevc")) as! NSViewController
+        print("tableVC:", tableVC)
+        print("tabView.tabViewItem(at: 0):", tabView.tabViewItem(at: 0))
+        //tabView.tabViewItem(at: 0).viewController = tableVC
+        let tabitem = NSTabViewItem.init(viewController: tableVC)
+        tabView.insertTabViewItem(tabitem, at: 0)
+        //tabView.tabViewItem(at: 1).viewController = tableVC
     }
     @objc dynamic var editable: Bool = true
     @objc dynamic var params: [NSURLQueryItem] = [] // Must be declared dynamic if using bindings; Use NS variant over struct variant for compatibility with NSArrayController
     @IBOutlet weak var urlTextField: NSTextField!
     @IBOutlet weak var paramsTableView: ParamsTableView!
+    @IBOutlet weak var tabView: NSTabView!
     @IBAction func methodPopUpDidChange(_ sender: NSPopUpButton) {
         print(#function, sender.selectedItem!.identifier!.rawValue)
+    }
+    @IBAction func didChangeSegment(_ sender: NSSegmentedControl) {
+        print(#function, sender.selectedSegment)
     }
     @IBAction func didPressGo(_ sender: NSButton) {
         let url = URL(string: urlTextField.stringValue)
