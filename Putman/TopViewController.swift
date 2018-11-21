@@ -17,12 +17,10 @@ class TopViewController: NSViewController {
         super.viewDidLoad()
         paramsTableView.dataSource = self
         let tableVC = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("tablevc")) as! NSViewController
-        print("tableVC:", tableVC)
-        print("tabView.tabViewItem(at: 0):", tabView.tabViewItem(at: 0))
-        //tabView.tabViewItem(at: 0).viewController = tableVC
         let tabitem = NSTabViewItem.init(viewController: tableVC)
-        tabView.insertTabViewItem(tabitem, at: 0)
-        //tabView.tabViewItem(at: 1).viewController = tableVC
+        tabitem.label = "Body"
+        //tabView.insertTabViewItem(tabitem, at: 0)
+        tabView.addTabViewItem(tabitem)
     }
     @objc dynamic var editable: Bool = true
     @objc dynamic var params: [NSURLQueryItem] = [] // Must be declared dynamic if using bindings; Use NS variant over struct variant for compatibility with NSArrayController
