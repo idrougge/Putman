@@ -34,12 +34,7 @@ class HorSplitViewController: NSSplitViewController {
         loadAndPresent()
     }
     
-    @objc func test(sender: URL?) {
-        print(type(of: self), #function, sender ?? "")
-        loadAndPresent(url: sender)
-    }
-    
-    private func loadAndPresent(url: URL? = nil) {
+    @objc func loadAndPresent(url: URL? = nil) {
         let url = url ?? URL(string: "http://127.0.0.1:8124/")!
         call(url: url){ data, response, error in
             print("completion")

@@ -25,11 +25,8 @@ class TopViewController: NSViewController {
         print(#function, sender.selectedItem!.identifier!.rawValue)
     }
     @IBAction func didPressGo(_ sender: NSButton) {
-        print(#function)
         let url = URL(string: urlTextField.stringValue)
-        print(nextResponder)
-        let sel = #selector(HorSplitViewController.test(sender:))
-        //nextResponder?.perform(sel)
+        let sel = #selector(HorSplitViewController.loadAndPresent(url:))
         NSApplication.shared.sendAction(sel, to: nil, from: url)
     }
 }
