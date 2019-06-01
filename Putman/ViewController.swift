@@ -15,11 +15,11 @@ class HorSplitViewController: NSSplitViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(type(of: self), #function)
-        print(self.childViewControllers)
-        for child in childViewControllers {
+        print(self.children)
+        for child in children {
             print(child, child.identifier!)
             if child is NSSplitViewController {
-                for child in child.childViewControllers {
+                for child in child.children {
                     print("\t",child, child.identifier!)
                     if child.identifier?.rawValue == "body" {
                         self.bodyController = child as? BodyController

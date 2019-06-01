@@ -61,7 +61,7 @@ extension TopViewController: NSTableViewDataSource {
             let components = NSURLComponents(string: urlTextField.stringValue),
             var queryItems = components.queryItems
             else { return }
-        if let index = queryItems.index(of: oldValue as URLQueryItem) {
+        if let index = queryItems.firstIndex(of: oldValue as URLQueryItem) {
             queryItems[index] = newValue as URLQueryItem
         } else {
             queryItems.append(newValue as URLQueryItem)
@@ -76,7 +76,7 @@ extension TopViewController: NSTableViewDataSource {
 }
 
 extension TopViewController: NSTextFieldDelegate {
-    override func controlTextDidChange(_ obj: Notification) {
+    func controlTextDidChange(_ obj: Notification) {
         print(#function, obj)
         guard
             let textField = obj.object as? NSTextField,
@@ -172,17 +172,17 @@ class TransformedValue: NSObject {
         print(#function, index)
         return super.setSelectionIndex(index)
     }
-    @objc dynamic override func objectDidBeginEditing(_ editor: Any) {
+    @objc dynamic override func objectDidBeginEditing(_ editor: NSEditor) {
         print(#function, editor)
     }
-    @objc dynamic override func controlTextDidBeginEditing(_ obj: Notification) {
+    @objc dynamic func controlTextDidBeginEditing(_ obj: Notification) {
         print(#function, obj)
     }
-    override func objectDidEndEditing(_ editor: Any) {
+    override func objectDidEndEditing(_ editor: NSEditor) {
         print(#function, editor)
         print(#function, self.arrangedObjects)
     }
-    override func controlTextDidEndEditing(_ obj: Notification) {
+    func controlTextDidEndEditing(_ obj: Notification) {
         print(#function, obj)
     }
     @objc dynamic override func addObject(_ object: Any) {
