@@ -13,9 +13,10 @@ class ParamsTableView: NSTableView {
     
     override func textDidEndEditing(_ notification: Notification) {
         //print(type(of: self), #function, notification)
-        guard let movement = notification.userInfo?["NSTextMovement"] as? NSTextMovement else {
-            return assertionFailure("No text movement")
-        }
+        guard
+            let rawValue = notification.userInfo?["NSTextMovement"] as? Int,
+            let movement = NSTextMovement(rawValue: rawValue)
+            else { return assertionFailure("No text movement") }
         switch movement {
         case .up: print("NSUpTextMovement")
         case .down: print("NSDownTextMovement")
