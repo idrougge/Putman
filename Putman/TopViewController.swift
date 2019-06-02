@@ -26,6 +26,11 @@ class TopViewController: NSViewController {
     }
     @IBAction func didPressGo(_ sender: NSButton) {
         let url = URL(string: urlTextField.stringValue)
+        go(to: url)
+    }
+    
+    func go(to url: URL?) {
+        guard let url = url else { return }
         let sel = #selector(HorSplitViewController.loadAndPresent(url:))
         NSApplication.shared.sendAction(sel, to: nil, from: url)
     }
@@ -97,6 +102,12 @@ extension TopViewController: NSTextFieldDelegate {
         queryItems.append(URLQueryItem(name: "", value: nil))
         self.params = queryItems as [NSURLQueryItem]
         paramsTableView.reloadData()
+    }
+    
+    func controlTextDidEndEditing(_ obj: Notification) {
+        print(#function, obj)
+        let url = URL(string: urlTextField.stringValue)
+        go(to: url)
     }
 }
 
