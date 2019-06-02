@@ -106,7 +106,11 @@ extension TopViewController: NSTextFieldDelegate {
     
     func controlTextDidEndEditing(_ obj: Notification) {
         print(#function, obj)
-        let url = URL(string: urlTextField.stringValue)
+    }
+    
+    @IBAction func didPressEnterInUrlField(_ sender: NSTextField) {
+        print(#function, sender)
+        let url = URL(string: sender.stringValue)
         go(to: url)
     }
 }
