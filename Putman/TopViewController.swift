@@ -100,9 +100,10 @@ extension TopViewController: NSTextFieldDelegate {
             else { return self.params.removeAll() }
         // NOTE: "Rich text" must be activated for NSTextField for attributed strings to take effect
         let attributedString = textField.attributedStringValue.mutableCopy() as! NSMutableAttributedString
-        let ranges: [(range: NSRange, colour: NSColor)] = [
-            (components.rangeOfScheme, .red), (components.rangeOfHost, .black), (components.rangeOfPath, .darkGray), (components.rangeOfQuery, .blue)
-            ]
+        let ranges: [NSRange: NSColor] = [components.rangeOfScheme: .red,
+                                          components.rangeOfHost: .black,
+                                          components.rangeOfPath: .darkGray,
+                                          components.rangeOfQuery: .blue]
         ranges.forEach{ (range, colour) in
             attributedString.addAttribute(.foregroundColor, value: colour, range: range)
         }
